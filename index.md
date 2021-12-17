@@ -2,4 +2,4 @@
 
 ### Kaggle Challenge
 
-* [Word Complexity Prediction] (https://datduonguva.github.io/cuddly-octo-succotash/2021/12/17/word-complexity-estimation)
+* [Word Complexity Prediction](https://datduonguva.github.io/cuddly-octo-succotash/2021/12/17/word-complexity-estimation)
