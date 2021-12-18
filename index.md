@@ -1,11 +1,11 @@
-## Welcome to Dat Duong's fun projects and experiments
+# Welcome to Dat Duong's fun projects and experiments
 
-### Kaggle Challenges
+## Kaggle Challenges
 
 * [Word Complexity Prediction](https://datduonguva.github.io/cuddly-octo-succotash/2021/12/17/word-complexity-estimation)
 
-### Paper and Codes
+## Paper and Codes
 
-### Active Learning with Tensorflow/Keras
+## Active Learning with Tensorflow/Keras
 
-### Reinforcement Learning
+## Reinforcement Learning
