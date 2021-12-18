@@ -31,7 +31,7 @@ df.head()
 
 ## Preprocessing
 * changes the letter to upper case, only keep ASCII characters. Replace all non-ASCII characters with "?
-* create the new columns with the masked tokens is replaced by <MASK>
+* create the new columns with the masked tokens is replaced by `<MASK>`
 
 ```python
 df.sentence = df.sentence.str.upper().apply(lambda x: x.encode("ascii", errors='replace').decode())
@@ -45,7 +45,49 @@ df["masked_sentence"] = df.apply(
 )
 
 ```
+* Get all the tokens and build the tokenizer
 
+```python
+# tokens from both df["sentence"] and df["masked_sentence"]
+tokens = set([])
+for sentence in df.sentence.to_list():
+    tokens.update(set(sentence.split(" ")))
+
+for sentence in df.masked_sentence.to_list():
+    tokens.update(set(sentence.split(" ")))
+
+
+# for padding use '<PAD>' tokens
+tokens.add("<PAD>")
+
+# create a map from token to a unique number, which is the index of that tokens in the sorted `tokens` list
+tokens = sorted(tokens)
+token2idx = {token: i for i, token in enumerate(tokens)}
+print("total number of tokens: ", len(tokens)
+
+```
+
+Tokenize all the input sentence and masked_sentence, pad all the sentence to the same length using the id of the `<PAD>` token. This must be done to df["sentence"] and df["masked_sentence"]
+
+In addition, we also need to add one more feature to the model, which is the ratio between the length of the masked texts over the length of the sentence (without padding). The reason behind this is that a longer masked phrase tends to be more complex compare to a shorter one.
+
+```python
+# tokenize sentences and masked_sentences
+tokenized_sentences = [[token2idx[token] for token in sentence.split(" ")] for sentence in df.sentence.tolist()]
+tokenized_masked_sentences = [[token2idx[token] for token in sentence.split(" ")] for sentence in df.masked_sentence.tolist()]
+
+# pad them to the same length
+max_length = max([len(_) for _ in tokenized_sentences])
+pad_token = token2idx["<PAD>"]
+tokenized_sentences = np.array([(sentence + [pad_token]*max_length)[:max_length] for sentence in tokenized_sentences])
+tokenized_masked_sentences = np.array([(sentence + [pad_token]*max_length)[:max_length] for sentence in tokenized_masked_sentences])
+
+# calculate the length of the target words relative to the total length of the sentence
+target_length = np.array((df.end_index - df.start_index)/(df.end_index - df.start_index).max())
+
+# getting the label
+y_true = np.array(df.complexity.tolist()
+```
 
 ## Split the data for K-fold cross validations
 
