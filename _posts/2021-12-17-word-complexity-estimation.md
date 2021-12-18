@@ -169,6 +169,103 @@ def data_generator(data_dict, batch_size):
 ```
 ## Build the model
 
+```python
+def build_model(max_length):
+
+    # we must reset the keras session to remove old memory
+    tf.keras.backend.clear_session()
+
+    # embeddings to reduce the size of the input tokens size from ~6K to 128
+    embeddings = tf.keras.layers.Embedding(
+        input_dim=len(token2idx),
+        output_dim=128,
+    )
+
+    input_1 = tf.keras.layers.Input(shape=(max_length,), dtype=tf.float32)
+    input_2 = tf.keras.layers.Input(shape=(max_length, ), dtype=tf.float32)
+    input_3 = tf.keras.layers.Input(shape=(1, ), dtype=tf.float32)
+
+    # send both input_1 and _2 through the embedding layer
+    x_1 = embeddings(input_1)
+    x_2 = embeddings(input_2)
+
+
+    # At this steps, x1 and x2 should already have the shape of (batch_size, max_length, 128)
+    # define a bidirectional LSTM then send the two string through
+    # the output shape of x_1, x_2 should be now (batch, 512)
+    lstm = tf.keras.layers.Bidirectional(
+        tf.keras.layers.LSTM(256)
+    )
+    x_1 = lstm(x_1)
+    x_2 = lstm(x_2)
+
+    # send the input_3, through a Dense 32 layer
+    x_3 = tf.keras.layers.Dense(32, activation='relu')(input_3)
+
+    # concatenate x1, x2, x3 into one array. The output should be now [batch, 512 + 512 + 32]
+    x = tf.keras.layers.Concatenate(axis=-1)([x_1, x_2, x_3])
+
+    # Send through a Dense layer with "relu" activation, followed by a Dropout
+    # layer to reduce overfitting. The output should be [batch_size, 256]
+    x = tf.keras.layers.Dense(256, activation='relu')(x)
+    x = tf.keras.layers.Dropout(0.2)(x)
+
+    # Send through an another Dense layer with "relu" activation, followed by a Dropout
+    # layer to reduce overfitting. The output should be [batch_size, 256]
+    x = tf.keras.layers.Dense(64, activation='relu')(x)
+    x = tf.keras.layers.Dropout(0.2)(x)
+
+    # Finally, send through 1 Dense layer with 1 single unit and linear activation for regression
+    y = tf.keras.layers.Dense(1, activation='linear')(x)
+
+    model = tf.keras.models.Model(inputs=[input_1, input_2, input_3], outputs=[y])
+
+    return model
+
+model = build_model(max_length=max_length)
+model.summary()
+```
+
+This is the output
+
+```
+Model: "model"
+__________________________________________________________________________________________________
+ Layer (type)                   Output Shape         Param #     Connected to
+==================================================================================================
+ input_1 (InputLayer)           [(None, 103)]        0           []
+
+ input_2 (InputLayer)           [(None, 103)]        0           []
+
+ embedding (Embedding)          (None, 103, 128)     618752      ['input_1[0][0]',
+                                                                  'input_2[0][0]']
+
+ input_3 (InputLayer)           [(None, 1)]          0           []
+
+ bidirectional (Bidirectional)  (None, 512)          788480      ['embedding[0][0]',
+                                                                  'embedding[1][0]']
+
+ dense (Dense)                  (None, 32)           64          ['input_3[0][0]']
+
+ concatenate (Concatenate)      (None, 1056)         0           ['bidirectional[0][0]',
+                                                                  'bidirectional[1][0]',
+                                                                  'dense[0][0]']
+
+ dense_1 (Dense)                (None, 256)          270592      ['concatenate[0][0]']
+
+ dropout (Dropout)              (None, 256)          0           ['dense_1[0][0]']
+
+ dense_2 (Dense)                (None, 64)           16448       ['dropout[0][0]']
+
+ dropout_1 (Dropout)            (None, 64)           0           ['dense_2[0][0]']
+
+ dense_3 (Dense)                (None, 1)            65          ['dropout_1[0][0]']
+
+==================================================================================================
+Total params: 1,694,401
+Trainable params: 1,694,401
+Non-trainable params: 0
+```
 ## Train the model
 
 ## K-fold Validation
