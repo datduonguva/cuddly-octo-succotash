@@ -91,8 +91,82 @@ y_true = np.array(df.complexity.tolist()
 
 ## Split the data for K-fold cross validations
 
-## Build the data generator
+In this part, we will use K=5. Therefore, the training data will be split to 5 equal parts. At the training steps, we will hold out 1 to be used as validation and the rest will be used for training
 
+```python
+def get_k_folds(K=5):
+    """
+    This function returns a list of K (train_dict, val_dict) tuples.
+    """
+    n = len(y_true)
+    result = []
+    for k in range(K):
+        # mask for the validation
+        mask = np.array([True if k/K < i/n < (k+1)/K else False for i in range(n)])
+
+        # extract the validation set
+        val_dict = {
+            'tokenized_sentences': tokenized_sentences[mask],
+            'tokenized_masked_sentences': tokenized_masked_sentences[mask],
+            'target_length': target_length[mask],
+            'y_true': y_true[mask]
+        }
+
+        # extract the training set
+        train_dict = {
+            'tokenized_sentences': tokenized_sentences[~mask],
+            'tokenized_masked_sentences': tokenized_masked_sentences[~mask],
+            'target_length': target_length[~mask],
+            'y_true': y_true[~mask]
+        }
+
+        # append to the list of folds
+        result.append((train_dict, val_dict))
+
+    return result
+```
+
+## Build the data generator
+```python
+
+def data_generator(data_dict, batch_size):
+    """
+    This function is a generator for the data. On each batch, we should yield 2 inputs and 1 outputs
+    This satisfies the requirements that the inputs must include 2 types of features. Here, the first
+    feature is the texts themseves, the second the mentioned ratio
+    """
+
+    data_size = len(data_dict["tokenized_sentences"])
+
+    i = 1
+    while True:
+        if i + batch_size > data_size:
+            # shuffle the data after use up all the samples
+            mask = np.arange(data_size)
+            np.random.shuffle(mask)
+            for key in data_dict:
+                data_dict[key] = data_dict[key][mask]
+            # reset the index
+            i = 0
+
+        # input_1 is the tokenized_setence
+        input_1 = data_dict["tokenized_sentences"][i: i + batch_size]
+
+        # input_2 is the tokenized_masked_sentence
+        input_2 = data_dict["tokenized_masked_sentences"][i: i + batch_size]
+
+        # input_3 is the ratio of the length of the target word relative to the length of the sentence
+        input_3 = np.expand_dims(data_dict["target_length"][i: i + batch_size], axis=-1)
+
+        # extracting the output
+        output = data_dict["y_true"][i: i + batch_size]
+
+        # increase the i index and yield the new batch of data
+        i += batch_size
+
+        # return a tuple of (X, y) where X is the list of the 3 inputs
+        yield [input_1, input_2, input_3], output
+```
 ## Build the model
 
 ## Train the model
