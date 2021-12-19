@@ -318,6 +318,6 @@ for i, (train_dict, val_dict) in enumerate(get_k_folds(K=5)):
     history.append(current_history)
 
 ```
-## Load and preprocess the test data
+The plot below shows the validation losses of different models trained on different set of train/validation splits
 
-## Load the best model and make the predictions for test data
+![validation loss](aa01.png)
