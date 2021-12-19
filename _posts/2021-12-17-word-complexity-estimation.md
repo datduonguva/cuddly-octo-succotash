@@ -318,6 +318,18 @@ for i, (train_dict, val_dict) in enumerate(get_k_folds(K=5)):
     history.append(current_history)
 
 ```
+
 The plot below shows the validation losses of different models trained on different set of train/validation splits
 
-![validation loss](aa01.png)
+```python
+best_val_loss = [np.min(history_.history['val_loss']) for history_ in history]
+plt.title("K-fold Cross Validation")
+plt.plot(np.arange(len(history)), best_val_loss, label="best validation loss")
+plt.xticks(np.arange(len(history)), [f"model_{i}" for i in range(len(history))])
+plt.ylabel("Validation Loss")
+plt.legend()
+
+```
+
+![validation loss](./aa01.png)
+
