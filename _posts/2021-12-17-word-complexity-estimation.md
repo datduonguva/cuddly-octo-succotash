@@ -170,6 +170,12 @@ def data_generator(data_dict, batch_size):
 ```
 ## Build the model
 
+* In this model, we will use an embedding layer to map each token to an features array of size 128. We will pad (or strip) the sentence to a predefined length of 50 tokens. The result after embedding lookup is an array of size (50, 128) for each sentence, (N, 50, 128) for each mini batch.
+* We then send this through an LSTM layer and get only the final output. If the LSTM layer has the size of 512, the output will have the shape of (N, 512). Both sentence and masked sentence will need to be sent tthrough 1 single LSTM layer. 
+* Next, we concatenate the LSTM outputs of both sentence and masked sentence. The output should be then (N, 1024)
+
+* Last, we send this through a couple of Fully-Connected layers of sizes 512, 128, 1. Each layer should have 'relu' activation, except for the the last layer that has linear activation. 
+
 ```python
 def build_model(max_length):
 
