@@ -331,5 +331,5 @@ plt.legend()
 
 ```
 
-![validation loss](./aa01.png)
+![validation loss](https://github.com/datduonguva/cuddly-octo-succotash/blob/gh-pages/_posts/aa01.png)
 
