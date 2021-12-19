@@ -274,9 +274,50 @@ Trainable params: 1,694,401
 Non-trainable params: 0
 ```
 ## Train the model
+To train the model, we will feed the `train_dict` and `val_dict` to the generator, which handles batch generation. We will start by using Adam optimizer with a small learning rate of 1E-4. Because this is a regression problem, we will use `mean_absolute_error` as the loss function. The Early Stopping patience is set to 3 and the best model will be saved to file so that we can compare many different models using K-fold cross validation.
 
+```python
+def train_model(max_length, train_dict, val_dict, batch_size=32, model_name=None):
+    """
+    train the model and save the model with the given name
+    """
+    model = build_model(max_length=max_length)
+
+    train_generator = data_generator(train_dict, batch_size=batch_size)
+    val_generator = data_generator(val_dict, batch_size=batch_size)
+
+    model.compile(
+        optimizer=tf.keras.optimizers.Adam(learning_rate=1e-4),
+        loss='mean_absolute_error'
+    )
+
+    early_stopping = tf.keras.callbacks.EarlyStopping(
+        patience=3,
+        restore_best_weights=True
+    )
+
+    history = model.fit(
+        x=train_generator,
+        epochs=50,
+        validation_data=val_generator,
+        steps_per_epoch=len(train_dict["tokenized_sentences"])//batch_size + 1,
+        validation_steps=len(val_dict["tokenized_sentences"])//batch_size + 1,
+        callbacks=[early_stopping],
+        verbose=1
+    )
+    model.save(f"best_model_{model_name}.tf")
+    return history
+```
 ## K-fold Validation
 
+In this session, we will do the k-fold cross valiation to select the best model
+```python
+history = []
+for i, (train_dict, val_dict) in enumerate(get_k_folds(K=5)):
+    current_history = train_model(max_length, train_dict, val_dict, batch_size=32, model_name=i)
+    history.append(current_history)
+
+```
 ## Load and preprocess the test data
 
 ## Load the best model and make the predictions for test data
