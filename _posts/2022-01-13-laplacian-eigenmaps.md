@@ -1,3 +1,10 @@
+---
+layout: post
+title: Laplacian Eigenmaps 
+tags: "Machine Learning"
+author: "Dat Duong"
+---
+
 # Laplacian Eigenmaps and Spectral Techniques for Embedding and Clustering
 
 The Laplacian Eigenmaps is one of the earliest method for learning the nodes' embedding in a graph. The algorithm works by using matrix factorization to learn the low dimension representation of the node-node similarity matrix.
