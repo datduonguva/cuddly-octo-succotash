@@ -69,7 +69,7 @@ visualize_box(generate_data(horizontal=False))
 
 
     
-![png](20220113_output_6_0.png)
+![png](https://github.com/datduonguva/cuddly-octo-succotash/blob/gh-pages/_posts/20220113_output_6_0.png?raw=true)
     
 
 
@@ -80,7 +80,7 @@ visualize_box(generate_data(horizontal=True))
 
 
     
-![png](20220113_output_7_0.png)
+![png](https://github.com/datduonguva/cuddly-octo-succotash/blob/gh-pages/_posts/20220113_output_7_0.png?raw=true)
     
 
 
@@ -145,7 +145,7 @@ _= plt.scatter(pca_embedding[labels == 1][:, 0], pca_embedding[labels == 1][:, 1
 
 
     
-![png](20220113_output_11_0.png)
+![png](https://github.com/datduonguva/cuddly-octo-succotash/blob/gh-pages/_posts/20220113_output_11_0.png?raw=true)
     
 
 
@@ -214,7 +214,7 @@ _= plt.scatter(v[labels == 1][:, k], v[labels == 1][:, k + 1], s=10)
 
 
     
-![png](20220113_output_16_0.png)
+![png](https://github.com/datduonguva/cuddly-octo-succotash/blob/gh-pages/_posts/20220113_output_16_0.png?raw=true)
     
 
 
@@ -229,7 +229,7 @@ _= plt.scatter(v[labels == 1][:, k], v[labels == 1][:, k + 1], s=10)
 
 
     
-![png](20220113_output_18_0.png)
+![png](https://github.com/datduonguva/cuddly-octo-succotash/blob/gh-pages/_posts/20220113_output_18_0.png?raw=true)
     
 
 
