@@ -9,3 +9,7 @@
 ## Active Learning with Tensorflow/Keras
 
 ## Reinforcement Learning
+
+## Graph Representation Learning
+
+* [Laplacian Eigenmaps](https://datduonguva.github.io/cuddly-octo-succotash/2022/01/13/laplacian-eigenmaps)
