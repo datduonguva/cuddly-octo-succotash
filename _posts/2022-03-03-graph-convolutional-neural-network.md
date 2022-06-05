@@ -16,10 +16,10 @@ $$
 where:
 
 * $$\hat{A} = \tilde{D}^{-1/2}\tilde{A}\tilde{D}^{-1/2}$$,
-* $$\tilde{A} = A + I_N$$ where $I_N$$ is the identity matrix,
+* $$\tilde{A} = A + I_N$$ where $$I_N$$ is the identity matrix,
 * $$\tilde{D}_{ii} = \sum_j \tilde{A}_{jj}$$,
 * $$W^{0} \in R^{D\times H}$$ is the input-to-hidden weight matrix, which can be represented by a fully connected layer without bias in Tensorflow,
-* $W^{1} \in R^{H\times F}$$ is the hidden-to-output weight matrix, which can also be represented by a fully connected layer.
+* $$W^{1} \in R^{H\times F}$$ is the hidden-to-output weight matrix, which can also be represented by a fully connected layer.
 
 
 For a seme-supervised learning multiclass classification task, only a subset of the dataset has labels. The loss function is defined as:
@@ -115,7 +115,7 @@ DD = np.sqrt(np.linalg.matrix_power(D_tildle, -1))
 A_hat = DD.dot(A).dot(DD).astype(np.float32)
 ```
 
-As exlained in the introduction, we need to transform the input to the output using:
+As explained in the introduction, we need to transform the input to the output using:
 
 
 $$
