@@ -13,5 +13,5 @@
 ## Graph Representation Learning
 
 * [Laplacian Eigenmaps](https://datduonguva.github.io/cuddly-octo-succotash/2022/01/13/laplacian-eigenmaps)
-* [GCN](https://datduonguva.github.io/cuddly-octo-succotash/2022/03/03/graph-convolutional-neural-network)
+* [GCN - Graph Convolutional Networks](https://datduonguva.github.io/cuddly-octo-succotash/2022/03/03/graph-convolutional-neural-network)
 
