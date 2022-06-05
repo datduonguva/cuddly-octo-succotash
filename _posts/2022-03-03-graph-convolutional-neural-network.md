@@ -46,7 +46,7 @@ To prepare the training data, first, we need to read the content file. Each line
 
 What we are doing here is to create a dictionary whose key is the node index and whose value is a list of 2 elements: the node features and the node label
 
-```
+```python
 with open("citeseer/citeseer.content", "r") as f:
     contents = [line.strip().split() for line in f.readlines()]
     contents = [[row[0], list(map(int, row[1:-1])), row[-1]] for row in contents]
@@ -59,7 +59,7 @@ with open("citeseer/citeseer.content", "r") as f:
 ```
 
 Next, we need to read the citation network in the `cite` file:
-```
+```python
 with open("citeseer/citeseer.cites", "r") as f:
     graph_rows = [line.strip().split() for line in f.readlines()]
 
@@ -73,7 +73,7 @@ nodes = sorted(set(start_nodes + end_nodes))
 nodes_to_index = {node: i for i, node in enumerate(nodes)}
 ```
 Now, we can create the feature array $X$, the label array $labels$ and the adjacent matrix $A$:
-```
+```python
 # create the feature array and format it to a numpy array
 X = [ contents[node][0] for node in nodes]
 X = np.array(X)
@@ -91,7 +91,7 @@ for row in graph_rows:
 
 As mentioned earlier, in this project will will only use 3.6% of the availabel labels for training and validation, the rest will be used for testing. To do this, we will generate a boolean mask as followed:
 
-```
+```python
 # mask 
 labelled_mask = (np.random.rand(len(A)) < label_rate) + 0
 return A, X, labels, labelled_mask
@@ -106,7 +106,7 @@ As we already have the adjacent matrix $$A$$,, we can calculate other quantities
 * $$,\hat{A} = \tilde{D}^{-1/2}\tilde{A}\tilde{D}^{-1/2}$$,
 
 These are implemented in Numpy as:
-```
+```python
 A_tildle = A + np.eye(len(A))
 D_tildle = np.diag(np.sum(A_tildle, axis=1))
 
@@ -125,7 +125,7 @@ $$
 
 In keras, this is written as
 
-```
+```python
 input_ = tf.keras.layers.Input(
     shape=X.shape[1],
     batch_size=X.shape[0],
@@ -142,7 +142,7 @@ model = tf.keras.models.Model(inputs=input_, outputs=y)
 ```
 ### Define the loss function
 For this semi-supervised task, the loss is aggregated across our labelled data. The boolean mask below helps setting all the loss of hold-out data to 0:
-```
+```python
 def custom_loss(y_true, y_pred):
     y_true = tf.one_hot(y_true, depth=6)
     y_true = tf.reshape(y_true, (-1, 6))
@@ -154,7 +154,7 @@ def custom_loss(y_true, y_pred):
 ```
 
 Similarly, we can use the boolean mask to segregate the training data and validation data in measuing the accuracy of the trained model:
-```
+```python
 def labelled_acc(y_true, y_pred):
     y_pred = tf.cast(tf.expand_dims(tf.argmax(y_pred, axis=-1), axis=1), dtype=tf.int32)
 
@@ -176,7 +176,7 @@ def unlabelled_acc(y_true, y_pred):
 
 ### Train the model
 At this point, we are ready to train the model:
-```
+```python
 model.compile(
     optimizer=tf.keras.optimizers.Adam(learning_rate=1e-2),
     loss=custom_loss,
