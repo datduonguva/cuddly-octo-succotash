@@ -15,20 +15,22 @@ $$
 
 where:
 
-* $\hat{A} = \tilde{D}^{-1/2}\tilde{A}\tilde{D}^{-1/2}$
-* $\tilde{A} = A + I_N$ where $I_N$ is the identity matrix
-* $\tilde{D}_{ii} = \sum_j \tilde{A}_{jj}$
-* $W^{0} \in R^{D\times H}$ is the input-to-hidden weight matrix, which can be represented by a fully connected layer without bias in Tensorflow
-* $W^{1} \in R^{H\times F}$ is the hidden-to-output weight matrix, which can also be represented by a fully connected layer.
+* $$\hat{A} = \tilde{D}^{-1/2}\tilde{A}\tilde{D}^{-1/2}$$
+* $$\tilde{A} = A + I_N$ where $I_N$$ is the identity matrix
+* $$\tilde{D}_{ii} = \sum_j \tilde{A}_{jj}$$
+* $$W^{0} \in R^{D\times H}$$ is the input-to-hidden weight matrix, which can be represented by a fully connected layer without bias in Tensorflow
+* $W^{1} \in R^{H\times F}$$ is the hidden-to-output weight matrix, which can also be represented by a fully connected layer.
 
 
 For a seme-supervised learning multiclass classification task, only a subset of the dataset has labels. The loss function is defined as:
 
-$$ \mathcal{L}  = -\sum_{l \in \mathcal{Y}_L}\sum_{f=1}^F Y_{lf}\ln Z_{lf}$$
+$$
+\mathcal{L}  = -\sum_{l \in \mathcal{Y}_L}\sum_{f=1}^F Y_{lf}\ln Z_{lf}
+$$
 
 where
 
-* $\mathcal{Y}_L$ is the set of nodes that have labels. 
+* $$\mathcal{Y}_L$$ is the set of nodes that have labels. 
 
 
 ## Data
@@ -97,11 +99,11 @@ return A, X, labels, labelled_mask
 
 ## Build the GCN model
 
-As we already have the adjacent matrix $A$, we can calculate other quantities like:
-* $\tilde{A} = A +  I_N$
-* $\tilde{D}_{ii} =\sum_{j}\tilde{A}_{ij}$
-* $D^{-1/2} = (D^{-1})^{1/2} = np.sqrt(D^{-1})$
-* $\hat{A} = \tilde{D}^{-1/2}\tilde{A}\tilde{D}^{-1/2}$
+As we already have the adjacent matrix $$A$$,, we can calculate other quantities like:
+* $$,\tilde{A} = A +  I_N$$,
+* $$,\tilde{D}_{ii} =\sum_{j}\tilde{A}_{ij}$$,
+* $$,D^{-1/2} = (D^{-1})^{1/2} = np.sqrt(D^{-1})$$,
+* $$,\hat{A} = \tilde{D}^{-1/2}\tilde{A}\tilde{D}^{-1/2}$$,
 
 These are implemented in Numpy as:
 ```
@@ -116,7 +118,9 @@ A_hat = DD.dot(A).dot(DD).astype(np.float32)
 As exlained in the introduction, we need to transform the input to the output using:
 
 
-$$ Z = f(X, A) = \text{softmax}(\hat{A} \text{ ReLU}(\hat{A}XW^{(0)})W^{(1)})$$
+$$
+Z = f(X, A) = \text{softmax}(\hat{A} \text{ ReLU}(\hat{A}XW^{(0)})W^{(1)})
+$$
 
 
 In keras, this is written as
