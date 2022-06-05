@@ -15,10 +15,10 @@ $$
 
 where:
 
-* $$\hat{A} = \tilde{D}^{-1/2}\tilde{A}\tilde{D}^{-1/2}$$
-* $$\tilde{A} = A + I_N$ where $I_N$$ is the identity matrix
-* $$\tilde{D}_{ii} = \sum_j \tilde{A}_{jj}$$
-* $$W^{0} \in R^{D\times H}$$ is the input-to-hidden weight matrix, which can be represented by a fully connected layer without bias in Tensorflow
+* $$\hat{A} = \tilde{D}^{-1/2}\tilde{A}\tilde{D}^{-1/2}$$,
+* $$\tilde{A} = A + I_N$$ where $I_N$$ is the identity matrix,
+* $$\tilde{D}_{ii} = \sum_j \tilde{A}_{jj}$$,
+* $$W^{0} \in R^{D\times H}$$ is the input-to-hidden weight matrix, which can be represented by a fully connected layer without bias in Tensorflow,
 * $W^{1} \in R^{H\times F}$$ is the hidden-to-output weight matrix, which can also be represented by a fully connected layer.
 
 
@@ -35,7 +35,7 @@ where
 
 ## Data
 
-In this tutorial, we will use the Citeseer dataset, which is a citation network. The dataset has 3,327 nodes, 4,732 edges. Each node has a numerical feature array of size 3,703 and is classified into 1 of 6 availble classes. For this semi-supervise learning task, we will set the label rate at 0.036. This means that we will only use $3.6\%$ of the nodes for training and validating. The rest of the nodes will be used for evaluation.
+In this tutorial, we will use the Citeseer dataset, which is a citation network. The dataset has 3,327 nodes, 4,732 edges. Each node has a numerical feature array of size 3,703 and is classified into 1 of 6 availble classes. For this semi-supervise learning task, we will set the label rate at 0.036. This means that we will only use $$3.6\%$$ of the nodes for training and validating. The rest of the nodes will be used for evaluation.
 
 To prepare the training data, first, we need to read the content file. Each line has the following format:
 
@@ -72,7 +72,7 @@ start_nodes, end_nodes = list(zip(*graph_rows))
 nodes = sorted(set(start_nodes + end_nodes))
 nodes_to_index = {node: i for i, node in enumerate(nodes)}
 ```
-Now, we can create the feature array $X$, the label array $labels$ and the adjacent matrix $A$:
+Now, we can create the feature array $$X$$, the label array $$labels$$ and the adjacent matrix $$A$$:
 ```python
 # create the feature array and format it to a numpy array
 X = [ contents[node][0] for node in nodes]
