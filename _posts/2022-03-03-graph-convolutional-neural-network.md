@@ -4,7 +4,7 @@
 
 In this short tutorial, we will implement the Graph Convolutional Network (GCN) with Tensorflow to solve the task of node classification where only a small subset of nodes have label.
 
-Consider a graph of $N$ nodes and $V$ edges. Each node can have its own features $X$ of dimension $D$ ($X \in R^D$). Let $A$ be the adjacency matrix ($A \in R^{N\times N}$), the structure of the network can be represented by a function  $f(X, A)$ that propagates information on graphs.
+Consider a graph of $N$ nodes and $V$ edges. Each node can have its own features \(X\) of dimension \(D\) (\( X \in R^D\) ). Let $A$ be the adjacency matrix ($A \in R^{N\times N}$), the structure of the network can be represented by a function  $f(X, A)$ that propagates information on graphs.
 
 
 According to the paper, the form of the functiof $f(X, A)$ is represented by:
