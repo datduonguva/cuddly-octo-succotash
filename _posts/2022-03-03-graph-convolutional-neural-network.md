@@ -1,6 +1,6 @@
 ---                                                                                                 
 layout: default                                                                                        
-title:  Word Complexity Estimation                                                                  
+title: Graph Convolutional Network with Tensorflow
 tags: "Machine Learning"                                                                            
 author: "Dat Duong"                                                                                 
 --- 
