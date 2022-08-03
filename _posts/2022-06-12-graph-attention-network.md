@@ -1,9 +1,10 @@
 ---                                                                                                 
-layout: post                                                                                        
+layout: default                                                                                     
 title: Graph Attention Network Implementation with Tensorflow
 tags: "Machine Learning"                                                                            
 author: "Dat Duong"                                                                                 
 ---
+
 # Graph Attention Network
 
 Graph Neural Networks (GNNs) were introduced in Gori et al. (2005) and Scarselli et al. (2009) as a generalization of recursive neural networks that can directly deal with a more general class of graphs, e.g. cyclic, directed and undirected graphs. GNNs consist of an iterative process, which propagates the node states until equilibrium; followed by a neural network, which produces an output for each node based on it states.
