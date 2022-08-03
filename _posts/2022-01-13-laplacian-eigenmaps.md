@@ -1,5 +1,5 @@
 ---
-layout: post
+layout: default
 title: Laplacian Eigenmaps 
 tags: "Machine Learning"
 author: "Dat Duong"

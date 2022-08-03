@@ -1,5 +1,5 @@
 ---                                                                                                 
-layout: post                                                                                        
+layout: default                                                                                        
 title:  Word Complexity Estimation                                                                  
 tags: "Machine Learning"                                                                            
 author: "Dat Duong"                                                                                 
