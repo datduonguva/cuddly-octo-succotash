@@ -14,4 +14,4 @@
 
 * [Laplacian Eigenmaps](https://datduonguva.github.io/cuddly-octo-succotash/2022/01/13/laplacian-eigenmaps)
 * [GCN - Graph Convolutional Networks](https://datduonguva.github.io/cuddly-octo-succotash/2022/03/03/graph-convolutional-neural-network)
-
+* [Graph Attention Network](https://datduonguva.github.io/cuddly-octo-succotash/2022/06/12/graph-attention-network-implementation-with-tensorflow)
